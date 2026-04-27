@@ -1,8 +1,7 @@
 import axios, { type InternalAxiosRequestConfig } from "axios";
-import { serverURL } from "./constants";
 
 const axiosInstance = axios.create({
-    baseURL:    serverURL,
+    baseURL:    "http://localhost:8000",
     timeout:    10000,
     headers: {
         "Content-Type": "application/json"
