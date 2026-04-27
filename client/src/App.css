@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #2B85FF;
+    --color-secondary: #EF863E;
+}
+
+@layer base {
+    html {
+        font-family:'Segoe UI', Tahoma;
+    }
+
+    body {
+        background-color: #fdfdfd;
+        overflow-x: hidden;
+    }
+}
+
+@layer components {
+    .input-box {
+        @apply w-full text-sm bg-transparent border-[1.5px] px-5 py-3 rounded mb-4 outline-none;
+    }
+
+    .btn-primary {
+        @apply w-full text-sm bg-primary text-white p-2 rounded my-1 border border-primary hover:bg-primary/10 hover:text-primary transition-all;
+    }
+
+    .btn-close {
+        @apply w-full text-sm bg-red-500 text-white p-2 rounded my-1 border border-red-500 hover:bg-red-500/10 hover:text-red-500 transition-all;
+    }
+
+    .icon-btn {
+        @apply text-sm text-slate-300 cursor-pointer hover:text-primary;
+    }
+
+    .input-label {
+        @apply text-sm text-slate-300;
+    }
+}
