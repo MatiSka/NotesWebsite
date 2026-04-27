@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-    --color-primary: #2B85FF;
-    --color-secondary: #EF863E;
+    --color-primary: #cf2563;
+    --color-secondary: #469fdf;
+    --color-error: #f20f16;
 }
 
 @layer base {
@@ -17,8 +18,12 @@
 }
 
 @layer components {
+    .border-soft {
+        @apply border-[1.5px] border-gray-300;
+    }
+
     .input-box {
-        @apply w-full text-sm bg-transparent border-[1.5px] px-5 py-3 rounded mb-4 outline-none;
+        @apply w-full text-sm bg-transparent border-[1.5px] border-gray-300 px-5 py-3 rounded mb-4 outline-none;
     }
 
     .btn-primary {
@@ -26,7 +31,7 @@
     }
 
     .btn-close {
-        @apply w-full text-sm bg-red-500 text-white p-2 rounded my-1 border border-red-500 hover:bg-red-500/10 hover:text-red-500 transition-all;
+        @apply w-full text-sm bg-error text-white p-2 rounded my-1 border border-error hover:bg-error/10 hover:text-error transition-all;
     }
 
     .icon-btn {

@@ -2,14 +2,8 @@ export type note = {
     _id:            string,
     title:          string,
     content:        string,
-    tags:           string[] | null,
+    tags:           string[],
     isPinned:       boolean,
     createdDate:    string,
-    userId:         string
-}
-
-export type openEditNote = {
-    isShow: boolean,
-    type:   string,
-    data:   note | null
+    userId:         string,
 }

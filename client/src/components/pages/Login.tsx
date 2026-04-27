@@ -54,40 +54,40 @@ export default function Login() {
         <div>
             <Navbar/>
 
-            <div className="flex items-center justify-center mt-28 px-1">
-                <div className="w-96 border rounded bg-white px-7 py-10">
+            <div className="flex items-center justify-center mt-28 px-1 ">
+                <div className="border-soft rounded">
+                    <h4 className="w-100 rounded-t text-3xl text-center py-3 bg-primary text-white">Login</h4>
+                    
+                    <div className="flex rounded-b">
+                       
+                        <div className="w-100 rounded-b items-end justify-end text-center bg-white px-8 py-8">
 
-                    <form onSubmit={(e) => HandleLogin(e)}>
+                            <form onSubmit={(e) => HandleLogin(e)}>
+                                <input
+                                    type="text" 
+                                    placeholder="Email" 
+                                    className="input-box" 
+                                    value={email}
+                                    onChange={(e) => SetEmail(e.target.value)}
+                                />
 
-                        <h4 className="text-2xl mb-7">Login</h4>
+                                <PasswordInput
+                                    value={password}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => SetPassword(e.target.value)}
+                                />
 
-                        <input
-                            type="text" 
-                            placeholder="Email" 
-                            className="input-box" 
-                            value={email}
-                            onChange={(e) => SetEmail(e.target.value)}
-                        />
+                                {error && <p className="text-red-500 text-sx pb-1">{error}</p>}
 
-                        <PasswordInput
-                            value={password}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => SetPassword(e.target.value)}
-                        />
+                                <button type="submit" className="btn-primary mt-1 mb-2">Login</button>
 
-                        {error && <p className="text-red-500 text-sx pb-1">{error}</p>}
+                                <Link to={"/signup"} className="font-medium text-primary text-sm text-center underline mt-2 hover:text-primary/50">
+                                    SignUp
+                                </Link>
+                            </form>
 
-                        <button type="submit" className="btn-primary">Login</button>
-
-                        <p className="text-sm text-center mt-4">
-                            Not registered yet? {" "}
-                            <Link to={"/signup"} className="font-medium text-primary underline">
-                                SignUp
-                            </Link>
-                        </p>
-                    </form>
-
+                        </div>
+                    </div>
                 </div>
-
             </div>
             
         </div>

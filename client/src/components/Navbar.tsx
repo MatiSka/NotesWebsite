@@ -5,8 +5,8 @@ import { useState } from "react";
 import type { user } from "../types/user";
 
 type props = {
-    SearchNotes:            (query: string) => void,
-    HandleClearSearch:      () => void,
+    SearchNotes?:            (query: string) => void,
+    HandleClearSearch?:      () => void,
     userInfo?:              null | user
 }
 
@@ -21,7 +21,7 @@ export default function Navbar({ SearchNotes, HandleClearSearch, userInfo }: pro
 
     function HandleSearch() {
         if (searchQuery) {
-            SearchNotes(searchQuery)
+            SearchNotes!(searchQuery)
         } else {
             ClearSearch()
         }
@@ -29,19 +29,21 @@ export default function Navbar({ SearchNotes, HandleClearSearch, userInfo }: pro
 
     function ClearSearch() {
         SetSearchQuery("")
-        HandleClearSearch()
+        HandleClearSearch!()
     }
 
     return (
         <nav className="bg-white flex items-center justify-between px-6 py-2 drop-shadow border border-slate-200">
-            <h2 className="text-xl font-medium text-black py-2">Notes</h2>
+            <h2 className="text-xl font-medium text-primary py-2">Notes</h2>
 
-            <SearchBar 
-                value={searchQuery}
-                OnChange={(e) => {SetSearchQuery(e.target.value)}}
-                HandleSearch={HandleSearch}
-                ClearSearch={ClearSearch}
-            />
+            {userInfo && 
+                <SearchBar 
+                    value={searchQuery}
+                    OnChange={(e) => {SetSearchQuery(e.target.value)}}
+                    HandleSearch={HandleSearch}
+                    ClearSearch={ClearSearch}
+                />
+            }
 
             {userInfo && <ProfileInfo userInfo={userInfo} OnLogout={OnLogout} />}
         </nav>

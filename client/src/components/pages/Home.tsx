@@ -11,7 +11,7 @@ import type { user } from "../../types/user";
 import type { note, openEditNote } from "../../types/note";
 import { GetCurrentTime } from "../../scripts/valider";
 import type { toastMessage } from "../../types/toastMessage";
-import Toast from "../messages/toast";
+import Toast from "../messages/Toast";
 import EmptyCard from "../cards/EmptyCard";
 
 export default function Home() {
@@ -24,9 +24,9 @@ export default function Home() {
     })
 
     const [showToastMessage, SetShowToastMessage] = useState<toastMessage>({
-        "visible":      true,
+        "visible":      false,
         "type":         "add",
-        "message":      "Note added successfully"
+        "message":      ""
     })
 
     const [userInfo, SetUserInfo] = useState<user | null>(null)
@@ -162,7 +162,7 @@ export default function Home() {
                             <NoteCard
                                 key={note._id}
                                 title={note.title}
-                                date={GetCurrentTime(note.CreatedDate)}
+                                date={GetCurrentTime(note.createdDate)}
                                 content={note.content}
                                 tags={note.tags || []}
                                 isPinned={note.isPinned}

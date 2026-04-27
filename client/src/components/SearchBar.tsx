@@ -21,13 +21,13 @@ export default function SearchBar({ value, OnChange, HandleSearch, ClearSearch }
             />
             {value && 
                 <IoMdClose 
-                    className="text-xl mr-3 text-slate-400 cursor-pointer hover:text-black" 
+                    className="text-xl mr-3 text-slate-400 cursor-pointer hover:text-primary" 
                     onClick={ClearSearch} 
                 />
             }
            
             <FaMagnifyingGlass 
-                className="text-slate-400 cursor-pointer hover:text-black" 
+                className="text-slate-400 cursor-pointer hover:text-primary" 
                 onClick={HandleSearch} 
             />
 
