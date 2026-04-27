@@ -116,7 +116,7 @@ export default function Home() {
 
     async function GetUserInfo() {
         try {
-            const res = await axiosInstance.get("get-user")
+            const res = await axiosInstance.get("user-get")
 
             if (res.data && res.data.user) {
                 SetUserInfo(res.data.user)
@@ -204,7 +204,7 @@ export default function Home() {
                     }
                 }}
                 contentLabel=""
-                className="w-[40%] max-h-3/4 bg-white rounded-md mx-auto mt-14 p-5 overflow-y-auto"
+                className="w-[40%] max-h-5/6 bg-white rounded-md mx-auto mt-14 p-5 overflow-y-auto"
             >
                 <EditNoteCard 
                     OnClose={() => {SetOpenEditNoteModal({isShow: false, type: "", data: null})}}

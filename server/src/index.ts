@@ -18,9 +18,9 @@ app.use(express.json())
 app.use(cors({origin: "*"}))
 
 // Users //
-app.post("/create-account", UserSignUp)
-app.post("/login", UserLogin)
-app.get("/get-user", AuthenticateToken, UserGet)
+app.post("/user-signup", UserSignUp) // /create-account 
+app.post("/user-login", UserLogin) // /login
+app.get("/user-get", AuthenticateToken, UserGet) // /get-user
 
 
 // Notes //

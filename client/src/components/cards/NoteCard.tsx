@@ -15,25 +15,27 @@ type props = {
 
 export default function NoteCard({title, date, content, tags, isPinned, OnEdit, OnDelete, OnPinNote}: props) {
     return (
-        <div className="border border-slate-200 rounded p-4 bg-white hover:shadow-xl transition-all ease-in-out">
-            <div className="flex items-center justify-between mb-.5">
-                <div>
-                    <h6 className="text-sm font-medium">{title}</h6>
-                    <span className="text-xs text-slate-500">{date}</span>
+        <div className={`border ${isPinned ? "border-primary" : "border-gray-300"} rounded p-4 bg-white hover:shadow-xl hover:border-2 hover:bg-primary/1 transition-all ease-in-out`}>
+            <div className="h-[85%]">
+                <div className="flex items-center justify-between mb-.5">
+                    <div>
+                        <h6 className="text-sm font-medium">{title}</h6>
+                        <span className="text-xs text-slate-500">{date}</span>
+                    </div>
+
+                    <MdOutlinePushPin className={`icon-btn ${isPinned ? 'text-primary hover:text-slate-300/50' : "text-slate-300 hover:text-primary/50"}`}  onClick={OnPinNote}/>
                 </div>
 
-                <MdOutlinePushPin className={`icon-btn ${isPinned ? 'text-primary' : "text-slate-300"}`}  onClick={OnPinNote}/>
+                <div className="flex flex-wrap gap-2 mb-.5">
+                    {tags.map((tag, index) => (
+                        <p key={index} className="w-auto text-center px-3 py-.5 text-xs bg-primary/20 text-slate-600 rounded">{tag}</p>
+                    ))}
+                </div>
+
+                <p className="text-xs text-slate-600 mt-2 wrap-break-word">{content?.slice(0, 55)} {content?.length > 55 ? "..." : ""}</p>
             </div>
-
-            <div className="flex gap-2 mb-.5">
-                {tags.map((tag, index) => (
-                    <p key={index} className="w-auto px-3 text-xs bg-slate-100 text-slate-500 rounded-xs">{tag}</p>
-                ))}
-            </div>
-
-            <p className="text-xs text-slate-600 mt-2">{content?.slice(0, 60)}</p>
-
-            <div className="flex items-center justify-between mt-2">
+            
+            <div className="h-[15%] flex items-center justify-between mt-2">
 
                 <div className="flex items-center gap-2">
                     <MdCreate

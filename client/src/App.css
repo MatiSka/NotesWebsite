@@ -1,8 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-    --color-primary: #cf2563;
-    --color-secondary: #469fdf;
+    --color-primary: #18967b;
     --color-error: #f20f16;
 }
 
@@ -19,11 +18,11 @@
 
 @layer components {
     .border-soft {
-        @apply border-[1.5px] border-gray-300;
+        @apply border-2 border-gray-300;
     }
 
     .input-box {
-        @apply w-full text-sm bg-transparent border-[1.5px] border-gray-300 px-5 py-3 rounded mb-4 outline-none;
+        @apply w-full text-sm bg-transparent border-2 border-gray-300 px-5 py-3 rounded mb-4 outline-none;
     }
 
     .btn-primary {

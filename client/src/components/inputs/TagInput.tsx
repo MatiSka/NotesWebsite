@@ -41,7 +41,7 @@ export default function TagInput( { tags, SetTags }: props) {
                     {tags.map((tag, index) => (
                         <div 
                             key={index} 
-                            className="flex w-auto items-center gap-3 px-2 mt-2 bg-slate-100 text-slate-500 rounded-xs
+                            className="flex w-auto items-center gap-3 px-2 mt-2 bg-primary/20 text-slate-500 rounded-xs
                             hover:bg-slate-200 transition-all"
                         >
                             {tag}
@@ -57,7 +57,8 @@ export default function TagInput( { tags, SetTags }: props) {
                 <input 
                     type="text" 
                     value={inputValue}
-                    className="text-sm bg-transparency px-3 py-2 rounded-md outline-none border border-slate-300" 
+                    className="text-sm bg-transparency px-3 py-2 rounded-md outline-none border 
+                        border-slate-300 bg-slate-100 focus:bg-primary/10" 
                     placeholder=""
                     onChange={HandleInputChange}
                     onKeyDown={HandleKeyDown}

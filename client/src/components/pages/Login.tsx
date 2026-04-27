@@ -29,7 +29,7 @@ export default function Login() {
         setError("")
 
         try {
-            const response = await axiosInstance.post("/login", {
+            const response = await axiosInstance.post("/user-login", {
                 "email":      email,
                 "password":   password
             })
@@ -56,7 +56,7 @@ export default function Login() {
 
             <div className="flex items-center justify-center mt-28 px-1 ">
                 <div className="border-soft rounded">
-                    <h4 className="w-100 rounded-t text-3xl text-center py-3 bg-primary text-white">Login</h4>
+                    <h4 className="w-100 m-0 p-0 rounded-t text-3xl text-center py-3 bg-primary text-white">Login</h4>
                     
                     <div className="flex rounded-b">
                        

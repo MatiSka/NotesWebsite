@@ -37,7 +37,7 @@ export default function EditNoteCard({ OnClose, GetAllNotes, EditToast, note, ty
             }
         } catch (err: AxiosResponse | any) {
             if (err.response && err.response.data && err.response.data.message) {
-                SetErrors([err.response.data.message])
+                SetErrors(err.response.data.message)
 
             } else {
                 SetErrors(["Unexpected error occured"])
@@ -102,11 +102,11 @@ export default function EditNoteCard({ OnClose, GetAllNotes, EditToast, note, ty
         <div className="relative">
 
             <div className="flex flex-col gap-2">
-                <label className="input-label">Title</label>
+                <label className="input-label text-slate-950">Title</label>
                 
                 <input
                     type="text"
-                    className="text-xl text-slate-950 outline-none bg-slate-100 p-2 rounded-md"
+                    className="text-xl text-slate-950 outline-none bg-slate-100 p-2 rounded-md focus:bg-primary/10"
                     placeholder=""
                     onChange={(e) => {SetTitle(e.target.value)}}
                     value={title}
@@ -115,10 +115,10 @@ export default function EditNoteCard({ OnClose, GetAllNotes, EditToast, note, ty
             </div>
 
             <div className="flex flex-col gap-2 mt-3">
-                <label className="input-label">Content</label>
+                <label className="input-label text-slate-950">Content</label>
                 <textarea
                     typeof="text"
-                    className="text-sm text-slate-950 outline-none bg-slate-100 p-2 rounded-md max-h-50 resize-none"
+                    className="text-sm text-slate-950 outline-none bg-slate-100 p-2 rounded-md max-h-50 resize-none focus:bg-primary/10"
                     placeholder=""
                     onChange={(e) => {SetContent(e.target.value)}}
                     value={content}
@@ -129,7 +129,7 @@ export default function EditNoteCard({ OnClose, GetAllNotes, EditToast, note, ty
             </div>
 
             <div className="mt-3">
-                <label className="input-label">Tags</label>
+                <label className="input-label text-slate-950">Tags</label>
                 <TagInput tags={tags} SetTags={SetTags}/>
             </div>
 

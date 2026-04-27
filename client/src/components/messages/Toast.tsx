@@ -19,7 +19,7 @@ export default function Toast( {toast, OnClose}: props) {
     }, [OnClose])
 
     return (
-        <div className={`absolute top-20 left-6 transition-all duration-700 ${toast.visible ? "opacity-100" : "opacity-0"}`}>
+        <div className={`absolute top-20 right-5 transition-all duration-700 ${toast.visible ? "opacity-100" : "opacity-0"}`}>
             <div 
                 className={`min-w-52 bg-white border-slate-200 shadow-2xl rounded-md after:w-1.25 after:h-full 
                     ${toast.type == "delete" ? "after:bg-red-500" : "after:bg-green-500"} 
@@ -40,7 +40,6 @@ export default function Toast( {toast, OnClose}: props) {
                     </div>
 
                     <p className="text-sm text-slate-800">{toast.message}</p>
-
                 </div>
             </div>
         </div>

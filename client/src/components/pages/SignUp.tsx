@@ -15,52 +15,52 @@ export default function SignUp() {
     const [error, setError]         = useState("")
 
     async function HandleSignUp(event: React.SubmitEvent) {
-            event.preventDefault()
+        event.preventDefault()
     
-            if (!name) {
-                setError("Please enter your name")
-                return
+        if (!name) {
+            setError("Please enter your name")
+            return
+        }
+
+        if (!ValidateEmail(email)) {
+            setError("Please enter a valid email address")
+            return
+        }
+
+        if (!password) {
+            setError("Please enter the password")
+            return
+        }
+
+        setError("")
+
+        try {
+            const res = await axiosInstance.post("/user-signup", {
+                name:       name,
+                email:      email,
+                password:   password
+            })
+
+            if (!res.data) { throw new Error("") }
+
+            if (res.data.error) {
+                setError(res.data.message)
+            }
+            else if (res.data.accessToken) {
+                localStorage.setItem("token", res.data.accessToken)
+                navigate("/home")
             }
 
-            if (!ValidateEmail(email)) {
-                setError("Please enter a valid email address")
-                return
-            }
-
-            if (!password) {
-                setError("Please enter the password")
-                return
-            }
-
-            setError("")
-
-            try {
-                const res = await axiosInstance.post("/create-account", {
-                    name:       name,
-                    email:      email,
-                    password:   password
-                })
-
-                if (!res.data) { throw new Error("") }
-
-                if (res.data.error) {
-                    setError(res.data.message)
-                }
-                else if (res.data.accessToken) {
-                    localStorage.setItem("token", res.data.accessToken)
-                    navigate("/home")
-                }
-
-            } catch (err: AxiosResponse | any) {
+        } catch (err: AxiosResponse | any) {
                 
-                if (err.response && err.response.data && err.response.data.message) {
-                    setError(err.response.data.message)
-                }
-                else {
-                    setError("An unexpected error occurred. Please try again leater")
-                }
+            if (err.response && err.response.data && err.response.data.message) {
+                setError(err.response.data.message)
+            }
+            else {
+                setError("An unexpected error occurred. Please try again leater")
             }
         }
+    }
 
     return (
         <div>
