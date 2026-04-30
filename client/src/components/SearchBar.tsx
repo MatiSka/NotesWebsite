@@ -18,7 +18,11 @@ export default function SearchBar({ value, OnChange, HandleSearch, ClearSearch }
     }
 
     return (
-        <div className={`w-80 flex items-center px-4 rounded-md ${isSearchInputFocus ? "bg-primary/10" : "bg-slate-100"}`}>
+        <div 
+            className={`sm:w-60 md:w-80 lg:w-90 flex items-center px-4 rounded-md 
+                ${isSearchInputFocus ? "bg-primary/10" : "bg-slate-100"}`}
+        >
+
             <input
                 type="text"
                 placeholder="Search Titles"

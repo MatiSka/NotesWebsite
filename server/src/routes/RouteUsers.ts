@@ -1,7 +1,8 @@
-import {type Request, type Response} from "express"
-import userModel from "../database/models/user"
+import express, {type Request, type Response} from "express"
+import userModel from "../db/models/ModelUser"
 import jwt from "jsonwebtoken"
-import { user } from "../types/user"
+import { user } from "../types/TypeUser"
+import { AuthenticateToken } from "../auth"
 
 type reqBody = {
     name?:          string,
@@ -12,8 +13,6 @@ type reqBody = {
 type reqUser = {
     user:   user
 }
-
-
 
 export async function UserSignUp (req: Request, res: Response) {
     const {name, email, password}: reqBody = req.body
@@ -98,3 +97,11 @@ export async function UserGet (req: Request, res: Response) {
         },
     })
 }
+
+const routesUser = express.Router()
+
+routesUser.post("/user-signup"  , UserSignUp)
+routesUser.post("/user-login"   , UserLogin)
+routesUser.get("/user-get"      , AuthenticateToken, UserGet)
+
+export default routesUser

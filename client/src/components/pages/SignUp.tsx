@@ -68,7 +68,7 @@ export default function SignUp() {
         
             <div className="flex items-center justify-center mt-28 px-1">
                 <div className="border-soft rounded">
-                    <h4 className="w-100 rounded-t text-3xl text-center py-3 bg-primary text-white">SignUp</h4>
+                    <h4 className="w-100 select-none rounded-t text-3xl text-center py-3 bg-primary text-white">SignUp</h4>
 
                     <div className="flex rounded-b">
                         <div className="w-100 rounded-b items-end justify-end text-center bg-white px-8 py-8">

@@ -1,6 +1,7 @@
-import {type Request, type Response} from "express"
-import noteModel from "../database/models/note"
-import { user } from "../types/user"
+import express, {type Request, type Response} from "express"
+import noteModel from "../db/models/ModelNote"
+import { user } from "../types/TypeUser"
+import { AuthenticateToken } from "../auth"
 
 type reqBody = {
     title?:         string,
@@ -12,8 +13,6 @@ type reqBody = {
 type reqUser = {
     user:   user
 }
-
-
 
 export async function NoteAdd (req: Request, res: Response) {
     const { title, content, tags }: reqBody = req.body
@@ -211,3 +210,14 @@ export async function NoteSearch (req: Request, res: Response) {
         return res.status(500).json({error: true, message: "Internal server error"})
     }
 }
+
+const routesNotes = express.Router()
+
+routesNotes.post("/add-note"                    , AuthenticateToken, NoteAdd)
+routesNotes.get("/get-all-notes"                , AuthenticateToken, NotesGet)
+routesNotes.get("/search-notes"                 , AuthenticateToken, NoteSearch)
+routesNotes.delete("/delete-note/:noteId"       , AuthenticateToken, NoteDelete)
+routesNotes.put("/edit-note/:noteId"            , AuthenticateToken, NoteEdit)
+routesNotes.put("/update-note-pinned/:noteId"   , AuthenticateToken, NotePinned)
+
+export default routesNotes

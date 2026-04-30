@@ -16,8 +16,10 @@ export default function PasswordInput({value, onChange, placeholder}: props){
     }
 
     return (
-        <div className="input-box flex items-center bg-transparent mb-3">
+        <div className="input-box flex items-center bg-transparent mb-3 select-none">
             <input
+                id="Password"
+                autoComplete="false"
                 value={value}
                 onChange={onChange}
                 type={showPassword ? "text" : "password"}
