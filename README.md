@@ -1,6 +1,11 @@
-<h1> V 1.1 </h1>
+<h1>V 1.4</h1>
+- Improved mobile gui
+- Small code improvments
 
-Pages
+<h2>V 1.3</h2>
+- Improved server layout/code 
+
+<h3>Pages (V 1.1)</h3>
 
 SignUp:
 <img width="460" height="225" alt="image" src="https://github.com/user-attachments/assets/4a26348b-5c46-42f8-9aa9-ae92277f6238" />
