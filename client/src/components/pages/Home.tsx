@@ -155,8 +155,8 @@ export default function Home() {
             <Navbar userInfo={userInfo} SearchNotes={SearchNotes} HandleClearSearch={HandleClearSearch}/>
             
             {allNotes && allNotes?.length > 0 ? (
-                <div className="container mx-auto">
-                    <div className=" grid grid-cols-3 gap-4 mt-8">
+                <div className="mx-auto">
+                    <div className="ml-4 mr-4 sm:ml-8 sm:mr-8 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
 
                         {allNotes?.map((note: note) => (
                             <NoteCard
@@ -204,7 +204,7 @@ export default function Home() {
                     }
                 }}
                 contentLabel=""
-                className="w-[40%] max-h-5/6 bg-white rounded-md mx-auto mt-14 p-5 overflow-y-auto"
+                className="w-5/6 sm:w-1/2 max-h-5/6 bg-white border-2 border-gray-300 rounded-md mx-auto mt-14 p-5 shadow-xl overflow-y-auto"
             >
                 <EditNoteCard 
                     OnClose={() => {SetOpenEditNoteModal({isShow: false, type: "", data: null})}}
