@@ -1,5 +1,5 @@
 <h1>V 1.4</h1>
-- Improved mobile gui
+- Improved mobile gui <br>
 - Small code improvments
 
 <h2>V 1.3</h2>
