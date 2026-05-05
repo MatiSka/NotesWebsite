@@ -1,7 +1,7 @@
 import express, {type Request, type Response} from "express"
 import noteModel from "../db/models/ModelNote"
 import { user } from "../types/TypeUser"
-import { AuthenticateToken } from "../auth"
+import { AuthenticateToken, Encrypt } from "../auth"
 
 type reqBody = {
     title?:         string,
@@ -139,7 +139,7 @@ export async function NotesGet (req: Request, res: Response) {
         return res.json({
             error:      false,
             message:    "All notes recived",
-            notes:      notes
+            notes:      Encrypt(req.accessToken, notes)
         })
     } catch (err) {
         return res.status(500).json({

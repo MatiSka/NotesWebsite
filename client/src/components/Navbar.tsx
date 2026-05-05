@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import ProfileInfo from "./ProfileInfo";
 import SearchBar from "./SearchBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { user } from "../types/user";
 
 type props = {
@@ -11,8 +11,8 @@ type props = {
 }
 
 export default function Navbar({ SearchNotes, HandleClearSearch, userInfo }: props) {
+    const navigate = useNavigate()
     const [searchQuery, SetSearchQuery] = useState("")
-    const navigate                      = useNavigate()
 
     function OnLogout() {
         localStorage.clear()
@@ -30,6 +30,12 @@ export default function Navbar({ SearchNotes, HandleClearSearch, userInfo }: pro
     function ClearSearch() {
         SetSearchQuery("")
         HandleClearSearch!()
+    }
+
+    if (SearchNotes && HandleClearSearch) {
+        useEffect(() => {
+            HandleSearch()
+        }, [searchQuery])
     }
 
     return (

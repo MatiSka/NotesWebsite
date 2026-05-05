@@ -13,6 +13,8 @@ export default function Login() {
     const [password, SetPassword]   = useState<string>("")
     const [errors, SetErrors]       = useState<string[]>([])
 
+    const [focusName, SetFocusName] = useState<boolean>(false)
+
     async function HandleLogin(event: React.SubmitEvent) {
         event.preventDefault()
 
@@ -30,7 +32,7 @@ export default function Login() {
             const response = await axiosInstance.post("/user-login", {
                 "email":      email,
                 "password":   password
-            })
+            }, {withCredentials: true})
 
             if (response.data && response.data.accessToken) {
                 localStorage.setItem("token", response.data.accessToken)
@@ -64,9 +66,11 @@ export default function Login() {
                                     id="Email"
                                     type="text" 
                                     placeholder="Email" 
-                                    className="input-box" 
+                                    className={`input-box ${focusName ? "bg-primary/10" : ""}`}
                                     value={email}
                                     onChange={(e) => SetEmail(e.target.value)}
+                                    onFocus={() => SetFocusName(!focusName)}
+                                    onBlur={() => SetFocusName(!focusName)}
                                 />
 
                                 <PasswordInput

@@ -25,3 +25,4 @@ export function GetCurrentTime(dateStr: string): string {
 
     return `${datePart} | ${timePart}`;
 }
+

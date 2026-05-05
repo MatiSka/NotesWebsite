@@ -13,41 +13,43 @@ import { GetCurrentTime } from "../../scripts/valider";
 import type { toastMessage } from "../../types/toastMessage";
 import Toast from "../messages/Toast";
 import EmptyCard from "../cards/EmptyCard";
+import { Decrypt } from "../../scripts/auth";
 
 export default function Home() {
     const navigate = useNavigate()
 
-    const [openEditNoteModal, SetOpenEditNoteModal] = useState<openEditNote>({
+    const [modalEditNote, SetModalEditNote] = useState<openEditNote>({
         isShow:     false,
         type:       "add",
         data:       null
     })
 
-    const [showToastMessage, SetShowToastMessage] = useState<toastMessage>({
-        "visible":      false,
-        "type":         "add",
-        "message":      ""
+    const [toastMessage, SetToastMessage] = useState<toastMessage>({
+        visible:      false,
+        type:         "add",
+        message:      ""
     })
 
-    const [userInfo, SetUserInfo] = useState<user | null>(null)
-    const [allNotes, SetAllNotes] = useState<note[] | null>(null)
-    const [isSearch, SetIsSearch] = useState(false)
+    const [userInfo, SetUserInfo]   = useState<user | null>(null)
+    const [notes, SetNotes]         = useState<note[] | null>(null)
+    const [isSearch, SetIsSearch]   = useState<boolean>(false)
 
-    function CloseToast() {
-        SetShowToastMessage({
+    function ToastClose() {
+        SetToastMessage({
             visible:    false,
-            type:       showToastMessage.type,
+            type:       toastMessage.type,
             message:    ""
         })
     }
 
-    function EditToast(message: string, type: string) {
-        SetShowToastMessage({
-            visible:    true,
+    function ToastEdit(message: string, type: string, isVisible?: boolean) {
+        SetToastMessage({
+            visible:    isVisible || true,
             type:       type,
             message:    message
         })
     }
+
 
     function HandleClearSearch() {
         SetIsSearch(false)
@@ -65,7 +67,7 @@ export default function Home() {
             if (!res.data) { throw new Error("")}
 
             if (res.data.note) {
-                EditToast(`Note ${!note.isPinned ? "pinned" : "unpinned"}`, "add")
+                ToastEdit(`Note ${!note.isPinned ? "pinned" : "unpinned"}`, "add")
                 GetAllNotes()
             }
         } catch (err: AxiosResponse | any) {
@@ -73,8 +75,8 @@ export default function Home() {
         }
     }
 
-    async function HandleEdit(note: note) {
-        SetOpenEditNoteModal({isShow: true, data: note, type: "edit"})
+    async function HandleModal(note: note) {
+        SetModalEditNote({isShow: true, data: note, type: "edit"})
     }
 
     async function NoteDelete(note: note) {
@@ -84,7 +86,7 @@ export default function Home() {
             if (!res.data) { throw new Error("")}
 
             if (!res.data.error) {
-                EditToast("Note deleted successfully", "delete")
+                ToastEdit("Note deleted successfully", "delete")
                 GetAllNotes()
             }
         } catch (err: AxiosResponse | any) {
@@ -107,7 +109,7 @@ export default function Home() {
 
             if (res.data.notes) {
                 SetIsSearch(true)
-                SetAllNotes(res.data.notes)
+                SetNotes(res.data.notes)
             }
         } catch (err) {
             console.log(err)
@@ -130,13 +132,15 @@ export default function Home() {
     }
 
     async function GetAllNotes() {
+        let token = localStorage.getItem("token")
+
         try {
             const res = await axiosInstance.get("/get-all-notes")
 
-            if (!res.data) { throw new Error("") }
+            if (!res.data || !token) { throw new Error("") }
 
             if (res.data.notes) {
-                SetAllNotes(res.data.notes)
+                SetNotes(Decrypt(token, res.data.notes))
             }
 
         } catch (err) {
@@ -154,11 +158,11 @@ export default function Home() {
         <div>
             <Navbar userInfo={userInfo} SearchNotes={SearchNotes} HandleClearSearch={HandleClearSearch}/>
             
-            {allNotes && allNotes?.length > 0 ? (
+            {notes && notes?.length > 0 ? (
                 <div className="mx-auto">
                     <div className="ml-4 mr-4 sm:ml-8 sm:mr-8 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
 
-                        {allNotes?.map((note: note) => (
+                        {notes?.map((note: note) => (
                             <NoteCard
                                 key={note._id}
                                 title={note.title}
@@ -166,7 +170,7 @@ export default function Home() {
                                 content={note.content}
                                 tags={note.tags || []}
                                 isPinned={note.isPinned}
-                                OnEdit={() => HandleEdit(note)}
+                                OnEdit={() => HandleModal(note)}
                                 OnDelete={() => NoteDelete(note)}
                                 OnPinNote={() => UpdateIsPinned(note)}
                             />
@@ -185,17 +189,13 @@ export default function Home() {
 
             <button 
                 className="absolute w-16 h-16 flex items-center justify-center right-10 bottom-10 rounded-2xl  hover:shadow-xl transition-all" 
-                onClick={() => {
-                    SetOpenEditNoteModal({ isShow: true, type: "add", data: null })
-                }}
+                onClick={() => SetModalEditNote({ isShow: true, type: "add", data: null })}
             >
-                <MdAdd 
-                    className="btn-primary w-full h-full text-[32px]rounded-2xl rounded-xl"
-                />
+                <MdAdd className="btn-primary w-full h-full text-[32px]rounded-2xl rounded-xl" />
             </button>
 
             <ReactModal
-                isOpen={openEditNoteModal.isShow}
+                isOpen={modalEditNote.isShow}
                 onRequestClose={() => {}}
                 ariaHideApp={false}
                 style={{
@@ -207,17 +207,17 @@ export default function Home() {
                 className="w-5/6 sm:w-1/2 max-h-5/6 bg-white border-2 border-gray-300 rounded-md mx-auto mt-14 p-5 shadow-xl overflow-y-auto"
             >
                 <EditNoteCard 
-                    OnClose={() => {SetOpenEditNoteModal({isShow: false, type: "", data: null})}}
+                    OnClose={() => {SetModalEditNote({isShow: false, type: "", data: null})}}
                     GetAllNotes={GetAllNotes}
-                    EditToast={EditToast}
-                    type={openEditNoteModal.type}
-                    note={openEditNoteModal.data}
+                    EditToast={ToastEdit}
+                    type={modalEditNote.type}
+                    note={modalEditNote.data}
                 />
             </ReactModal>
 
             <Toast 
-                toast={showToastMessage}
-                OnClose={CloseToast}
+                toast={toastMessage}
+                OnClose={ToastClose}
             />
         </div>
     )
